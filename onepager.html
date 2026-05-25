@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2008 Brimley Road — Team One-Pager</title>
+<style>
+  :root {
+    --navy: #0D1F3C;
+    --navy-light: #1A3A6B;
+    --accent: #2E5D9F;
+    --green: #2D6E4F;
+    --amber: #B7791F;
+    --plum: #6B3F73;
+    --grey: #555;
+    --grey-light: #ECECEC;
+    --bg: #FAFAF8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    color: #060E1E;
+    background: var(--bg);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #DDD;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  /* HEADER */
+  header.banner {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  header.banner h1 {
+    font-size: 18px;
+    color: var(--navy);
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+  header.banner .sub {
+    color: var(--grey);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  header.banner .meta-right {
+    text-align: right;
+    color: var(--grey);
+    font-size: 10px;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  header.banner .badge {
+    display: inline-block;
+    background: var(--plum);
+    color: white;
+    font-weight: 600;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* TOP METRICS STRIP */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .metric {
+    background: var(--bg);
+    border-left: 3px solid var(--navy);
+    padding: 4px 7px;
+    border-radius: 2px;
+  }
+  .metric.amber { border-left-color: var(--amber); }
+  .metric.blue { border-left-color: var(--accent); }
+  .metric.green { border-left-color: var(--green); }
+  .metric.plum { border-left-color: var(--plum); }
+  .metric .l {
+    font-size: 8px;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+  .metric .v {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: 1px;
+  }
+  .metric .n {
+    font-size: 8.5px;
+    color: #888;
+    margin-top: 1px;
+  }
+
+  /* 2-COLUMN MID SECTION */
+  .mid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 11px;
+    color: white;
+    background: var(--navy);
+    padding: 3px 8px;
+    margin: 0 0 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  table.mini {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+  }
+  table.mini td {
+    padding: 2px 6px;
+    border-bottom: 1px solid #EEE;
+    vertical-align: top;
+  }
+  table.mini td.lbl { font-weight: 600; }
+  table.mini td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table.mini tr.total td {
+    border-top: 1.5px solid var(--navy);
+    border-bottom: none;
+    font-weight: 700;
+    color: var(--navy);
+    padding-top: 4px;
+  }
+  table.mini tr.split td {
+    color: var(--grey);
+    font-style: italic;
+  }
+  table.mini tr.split td.lbl { padding-left: 14px; }
+
+  /* Capital stack — true bar graph, each row shaded as % of TPC */
+  .stack-header {
+    display: grid;
+    grid-template-columns: 130px 1fr 90px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 9px;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+  .stack-header .scale {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2px;
+    width: 100%;
+  }
+  .stack-header .scale span { flex-shrink: 0; }
+  .stack-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 90px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 3px;
+    font-size: 10.5px;
+  }
+  .stack-row .lbl { font-weight: 600; line-height: 1.2; }
+  .stack-row .bar-wrap {
+    display: block;
+    background: var(--grey-light);
+    border: 1px solid #DDD;
+    border-radius: 2px;
+    height: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stack-row .bar {
+    display: block;
+    height: 100%;
+    border-radius: 1px;
+    position: relative;
+  }
+  .stack-row .bar-label {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+    padding: 0 5px;
+    white-space: nowrap;
+    text-shadow: 0 0 2px rgba(0,0,0,0.3);
+  }
+  .stack-row .bar-label.outside {
+    color: var(--navy);
+    text-shadow: none;
+  }
+  .stack-row .amt { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  /* RETURNS COMPARISON */
+  .returns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .return-panel {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 6px 10px;
+  }
+  .return-panel.investor { border-top: 4px solid var(--navy); }
+  .return-panel.greenway { border-top: 4px solid var(--plum); }
+  .return-panel h3 {
+    margin: 0 0 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--navy);
+  }
+  .return-panel.greenway h3 { color: var(--plum); }
+  .return-panel table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  .return-panel table td { padding: 1.5px 0; }
+  .return-panel table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .return-panel .headline {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #DDD;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .return-panel.greenway .headline { color: var(--plum); }
+  .return-panel .headline .num { font-size: 14px; }
+  .return-panel .multiples {
+    margin-top: 4px;
+    font-size: 9.5px;
+    color: var(--grey);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Post-Yr 20 strip */
+  .post-yr20 {
+    margin-top: 6px;
+    border: 1px solid var(--plum);
+    border-left: 3px solid var(--plum);
+    border-radius: 3px;
+    padding: 5px 10px;
+    background: #FAF6FA;
+    font-size: 10px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .post-yr20 .badge {
+    background: var(--plum);
+    color: white;
+    font-weight: 700;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+  }
+  .post-yr20 .body {
+    color: var(--navy);
+    line-height: 1.35;
+  }
+  .post-yr20 .body strong { color: var(--plum); }
+  .post-yr20 .num-block {
+    text-align: right;
+    border-left: 1px solid #D0BFD2;
+    padding-left: 12px;
+    color: var(--plum);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .post-yr20 .num-block .big { font-size: 14px; }
+  .post-yr20 .num-block .small { font-size: 9px; font-weight: 400; color: var(--grey); font-style: italic; }
+
+  /* TIMELINE STRIP */
+  .timeline-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin: 6px 0 10px;
+  }
+  .tl-event {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 9.5px;
+    position: relative;
+    background: white;
+  }
+  .tl-event.event { border-color: var(--green); border-top: 3px solid var(--green); }
+  .tl-event.nfp { border-color: var(--plum); border-top: 3px solid var(--plum); }
+  .tl-event .date {
+    font-size: 9px;
+    color: var(--navy);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tl-event .what {
+    margin-top: 2px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .tl-event .note {
+    margin-top: 2px;
+    color: var(--grey);
+    font-size: 9px;
+  }
+
+  /* BOTTOM SECTION */
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .panel {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 5px 10px 6px;
+    background: white;
+  }
+  .panel h2 { margin: -5px -10px 4px; border-radius: 0; }
+  .panel ul {
+    margin: 0;
+    padding-left: 14px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .panel ul li { margin-bottom: 2px; }
+  .panel.warn { border-left: 3px solid var(--amber); }
+  .panel.warn h2 { background: var(--amber); }
+
+  footer {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #DDD;
+    font-size: 9px;
+    color: #999;
+    display: flex;
+    justify-content: space-between;
+  }
+  footer a { color: var(--grey); text-decoration: none; }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; border: none; padding: 12px 18px; max-width: 100%; }
+    @page { size: letter; margin: 0.4in; }
+  }
+
+  @media (max-width: 700px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .mid, .returns-grid, .bottom { grid-template-columns: 1fr; }
+    .timeline-strip { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="banner">
+  <div>
+    <h1>2008 BRIMLEY ROAD — TEAM ONE-PAGER</h1>
+    <div class="sub">Scarborough, ON · 6-Storey · 28-Unit Purpose-Built Rental · Architect: Office Ou Ltd. · PAC May 2026</div>
+  </div>
+  <div class="meta-right">
+    <div><strong>Status:</strong> Money Flow Structured · Private 1st Sourcing</div>
+    <div>Doc rev: May 2026 (v3)</div>
+    <div><span class="badge">Ubuntu LT + BCH + Private 1st</span></div>
+  </div>
+</header>
+
+<!-- TOP METRICS STRIP -->
+<div class="metrics">
+  <div class="metric"><div class="l">Project Cost</div><div class="v">$16.43M</div><div class="n">$300/sf hard</div></div>
+  <div class="metric green"><div class="l">BCH Forgivable</div><div class="v">$6.57M</div><div class="n">40% of TPC</div></div>
+  <div class="metric blue"><div class="l">CMHC Insured</div><div class="v">$9.86M</div><div class="n">60% @ 2.5%</div></div>
+  <div class="metric amber"><div class="l">Investor Cash at Close</div><div class="v">$0</div><div class="n">Private 1st bridges all</div></div>
+  <div class="metric"><div class="l">Investor 20-Yr Return</div><div class="v">$7.85M</div><div class="n">9.55× / 11.94% CAGR</div></div>
+  <div class="metric plum"><div class="l">Greenway NFP Value</div><div class="v">$14.83M</div><div class="n">Asset + cash @ Yr 20 (4% cap)</div></div>
+</div>
+
+<!-- MID: CAPITAL STACK + YEAR 1 -->
+<div class="mid">
+
+<div>
+  <h2>Capital Stack & Land Structure</h2>
+
+  <div class="stack-header">
+    <span></span>
+    <div class="scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100% of TPC</span></div>
+    <span style="text-align:right;">Amount</span>
+  </div>
+  <div class="stack-row">
+    <span class="lbl">BCH Forgivable</span>
+    <span class="bar-wrap"><span class="bar" style="width:40%; background:#2D6E4F;"><span class="bar-label">40%</span></span></span>
+    <span class="amt">$6,573,137</span>
+  </div>
+  <div class="stack-row">
+    <span class="lbl">CMHC Insured</span>
+    <span class="bar-wrap"><span class="bar" style="width:60%; background:#2E5D9F;"><span class="bar-label">60%</span></span></span>
+    <span class="amt">$9,859,705</span>
+  </div>
+  <div class="stack-row">
+    <span class="lbl">Investor Equity (5% TPC, from land uplift)</span>
+    <span class="bar-wrap"><span class="bar" style="width:5%; background:#0D1F3C;"></span><span class="bar-label outside" style="left:6%;">5%</span></span>
+    <span class="amt">$821,642</span>
+  </div>
+  <div class="stack-row">
+    <span class="lbl">Private 1st (Bridge)</span>
+    <span class="bar-wrap"><span class="bar" style="width:8.65%; background:#B7791F;"></span><span class="bar-label outside" style="left:10%;">8.7%*</span></span>
+    <span class="amt">$1,421,950</span>
+  </div>
+
+  <table class="mini" style="margin-top: 8px;">
+    <tr>
+      <td class="lbl">Cash to Seller at Close</td>
+      <td class="num">$1,000,000</td>
+    </tr>
+    <tr>
+      <td class="lbl">VTB (7.5% / 24-mo / first charge)</td>
+      <td class="num">$1,000,000</td>
+    </tr>
+    <tr class="split">
+      <td class="lbl">VTB waived at garage completion (Muskoka)</td>
+      <td class="num">−$500,000</td>
+    </tr>
+    <tr>
+      <td class="lbl">Garage at seller's Muskoka home (actual cost)</td>
+      <td class="num">~$300,000</td>
+    </tr>
+    <tr>
+      <td class="lbl">LTT (ON $36,475 + Toronto MLTT $36,475)</td>
+      <td class="num">$72,950</td>
+    </tr>
+    <tr>
+      <td class="lbl">Legal / title / DD / closing</td>
+      <td class="num">$49,000</td>
+    </tr>
+    <tr>
+      <td class="lbl">Demo of existing dwelling</td>
+      <td class="num">$40,000</td>
+    </tr>
+    <tr class="split">
+      <td class="lbl">All Phase 1+2.5 bridged by private 1st on land</td>
+      <td class="num"></td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <h2>Year 1 Cash Flow (60/40 Split)</h2>
+  <table class="mini">
+    <tr><td class="lbl">Gross Rental Income</td><td class="num">$748,560</td></tr>
+    <tr><td class="lbl" style="padding-left:8px;">Vacancy (5%)</td><td class="num">−$37,428</td></tr>
+    <tr><td class="lbl">Effective Gross Income</td><td class="num">$711,132</td></tr>
+    <tr><td class="lbl" style="padding-left:8px;">Operating Expenses</td><td class="num">−$157,445</td></tr>
+    <tr class="total"><td class="lbl">Stabilized NOI</td><td class="num">$553,687</td></tr>
+    <tr><td class="lbl">CMHC Debt Service (BCH 2.5%)</td><td class="num">−$349,822</td></tr>
+    <tr class="total"><td class="lbl">Cash Flow After Debt Service</td><td class="num">$203,864</td></tr>
+    <tr class="split"><td class="lbl">→ Investor (60%)</td><td class="num">$122,319</td></tr>
+    <tr class="split"><td class="lbl">→ Greenway NFP (40%)</td><td class="num">$81,546</td></tr>
+  </table>
+
+  <table class="mini" style="margin-top: 8px;">
+    <tr><td class="lbl">DSCR Coverage</td><td class="num"><strong>1.58×</strong></td></tr>
+    <tr><td class="lbl">Affordability (BCH covenant)</td><td class="num"><strong>9/28 = 32.1%</strong></td></tr>
+    <tr><td class="lbl">Cash Back @ Phase 3 (BCH land draw)</td><td class="num"><strong>$659,554</strong></td></tr>
+    <tr><td class="lbl">Cash Back @ Permanent Refi</td><td class="num"><strong>$2,341,680</strong></td></tr>
+    <tr><td class="lbl">Exit Cap Rate (Yr 20)</td><td class="num"><strong>4.0% (Toronto)</strong></td></tr>
+  </table>
+</div>
+
+</div>
+
+<!-- 20-YEAR RETURNS -->
+<h2>20-Year Returns at Asset Transfer (Q3 2049)</h2>
+
+<div class="returns-grid">
+  <div class="return-panel investor">
+    <h3>Investor (Property Owner, 60% Cash Flow)</h3>
+    <table>
+      <tr><td>Equity returned at Yr 20 (all from land uplift)</td><td class="num">$821,642</td></tr>
+      <tr><td>CMHC mortgage paydown captured</td><td class="num">$2,639,522</td></tr>
+      <tr><td>Cumulative 60% cash distributions (Yrs 1–20)</td><td class="num">$4,384,915</td></tr>
+    </table>
+    <div class="headline"><span>Investor 20-Yr Total</span><span class="num">$7,846,079</span></div>
+    <div class="multiples">9.55× equity multiple on $822K equity · 11.94% CAGR · $0 cash deployed (ever) · plus $3.00M cash backs separately</div>
+  </div>
+
+  <div class="return-panel greenway">
+    <h3>Greenway NFP (Charitable Beneficiary, 40% Cash Flow + Yr 20 Asset)</h3>
+    <table>
+      <tr><td>Asset value (Yr 20, 4% cap)</td><td class="num">$22,586,215</td></tr>
+      <tr><td>Mortgage carved out (incl. Yr 20 refi)</td><td class="num">−$10,681,347</td></tr>
+      <tr><td><strong>Net asset equity transferred</strong></td><td class="num"><strong>$11,904,868</strong></td></tr>
+      <tr><td>Cumulative 40% cash distributions</td><td class="num">$2,923,277</td></tr>
+    </table>
+    <div class="headline"><span>Greenway Total Value</span><span class="num">$14,828,145</span></div>
+    <div class="multiples">Greenway refinances only ~$2.64M (~12% LTV on $22.6M asset) to fund Investor $3.46M paydown payout — debt-light transfer</div>
+  </div>
+</div>
+
+<div class="post-yr20">
+  <span class="badge">YR 21+</span>
+  <div class="body">
+    <strong>Greenway owns 100% of the asset</strong> — BCH covenant complete, Investor fully exited. <strong>100% of post-debt-service cash flow goes to Greenway in perpetuity.</strong> NOI grows 2.5%/yr while refinanced mortgage debt service stays fixed — Greenway's net cash compounds faster than rent growth.
+  </div>
+  <div class="num-block">
+    <div class="big">~$813K</div>
+    <div class="small">Yr 21 net cash to Greenway</div>
+    <div class="small">(NOI ~$926K − DS ~$112K on $2.64M refi)</div>
+    <div class="small">→ ~$1.37M by Yr 40 (fixed DS)</div>
+  </div>
+</div>
+
+<!-- TIMELINE STRIP -->
+<h2>Critical Path — Key Dates</h2>
+
+<div class="timeline-strip">
+  <div class="tl-event event">
+    <div class="date">Aug 2026 — Phase 1</div>
+    <div class="what">Land Close + $0 Investor Cash</div>
+    <div class="note">$1.12M drawn on $1.42M private 1st; $1M to seller (who closes Muskoka same day); Gary's occupancy begins</div>
+  </div>
+  <div class="tl-event">
+    <div class="date">Apr–Jun 2027 — Phase 2.5</div>
+    <div class="what">Garage Built at Muskoka</div>
+    <div class="note">$300K Investor cost; $500K VTB credit; $300K private 1st top-up draw</div>
+  </div>
+  <div class="tl-event event">
+    <div class="date">Jul 2027 — Phase 3</div>
+    <div class="what">BCH Land Draw → Discharge Private 1st + VTB → Investor $660K Cash Back</div>
+    <div class="note">$2.7M BCH land draw → $1.54M private 1st payoff + $500K residual VTB + $660K to Investor; construction starts</div>
+  </div>
+  <div class="tl-event">
+    <div class="date">Aug 27 – Jan 29</div>
+    <div class="what">Construction Draws (18 months)</div>
+    <div class="note">5 × 20/20/20/20/5 + 10% holdback; BCH+CMHC takeout at substantial completion</div>
+  </div>
+  <div class="tl-event nfp">
+    <div class="date">Q3 2049</div>
+    <div class="what">Yr 20: BCH Forgiven + Greenway Refi + Investor $3.46M Payout</div>
+    <div class="note">Investor $7.85M 20-yr return + $3.00M cash backs; Greenway gets asset + $14.83M total</div>
+  </div>
+</div>
+
+<!-- BOTTOM: NEXT STEPS + KEY RISKS/ASSUMPTIONS -->
+<div class="bottom">
+
+<div class="panel">
+  <h2>Next Steps</h2>
+  <ul>
+    <li><strong>This week:</strong> Lawyer engagement (Ubuntu LT + BCH + Private 1st + land deal) — see <em>2008_Brimley_Lawyer_Email.docx</em></li>
+    <li><strong>This week:</strong> Source private 1st lender ($1.42M @ 10%, 1st on land) — critical path</li>
+    <li><strong>Next 2 wks:</strong> CMHC / BCH pre-application call to validate 90% land draw + 2.5% rate</li>
+    <li><strong>Next 2 wks:</strong> Greenway NFP intro + charitable trust counsel engagement</li>
+    <li><strong>Jun 2026:</strong> LOI to Gary; Ubuntu LT formation; coordinate w/ seller's Muskoka counsel</li>
+    <li><strong>Aug 2026:</strong> Phase 1 close — Brimley + Muskoka on the same day</li>
+  </ul>
+</div>
+
+<div class="panel warn">
+  <h2>Critical Assumptions to Validate</h2>
+  <ul>
+    <li><strong>Private 1st on land placeable</strong> @ 10% / 71% LTV ($1.42M on $2M acquisition / 47% on $3M permitted) — without this Investor needs ~$1.12M cash at closing</li>
+    <li><strong>BCH 90% land draw on $3M permitted value</strong> = $2.7M — funds entire Phase 3 disbursement; lower draw means Investor cash gap</li>
+    <li><strong>2.5% rate on BCH-program CMHC insured 60%</strong> — at 3.5% standard MLI rate, DSCR-driven max loan drops materially</li>
+    <li><strong>Standard CMHC MLI Select does NOT pencil</strong> at $300/sf — BCH-or-no-deal</li>
+    <li><strong>Greenway refinance market</strong> available at Yr 20 — trust deed needs fallback if impaired</li>
+  </ul>
+</div>
+
+</div>
+
+<footer>
+  <span>Investor (60%) · Greenway NFP (40%) · Ubuntu Land Trust · BCH Capital Stack</span>
+  <span>Files: <em>Deal Memo · Feasibility Model v2 · Timeline · Lawyer Email · This One-Pager</em></span>
+</footer>
+
+</div>
+</body>
+</html>

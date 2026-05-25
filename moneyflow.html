@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2008 Brimley Road — Money Flow Visual</title>
+<style>
+  :root {
+    --navy: #0D1F3C;
+    --navy-light: #1A3A6B;
+    --accent: #2E5D9F;
+    --green: #2D6E4F;
+    --amber: #B7791F;
+    --plum: #6B3F73;
+    --grey: #555;
+    --grey-light: #ECECEC;
+    --bg: #FAFAF8;
+    --party-investor: #0D1F3C;
+    --party-seller: #B7791F;
+    --party-private: #6B3F73;
+    --party-bch: #2D6E4F;
+    --party-gov: #888888;
+    --party-muskoka: #2E5D9F;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    color: #060E1E;
+    background: var(--bg);
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  header { border-bottom: 3px solid var(--navy); padding-bottom: 10px; margin-bottom: 16px; }
+  header h1 { font-size: 22px; color: var(--navy); margin: 0 0 4px; }
+  header .sub { color: var(--grey); font-size: 12px; }
+  header .meta { color: #888; font-size: 10px; margin-top: 2px; }
+
+  /* Top summary banner */
+  .summary-banner {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .summary-banner .label {
+    font-size: 10px;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .summary-banner .flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .summary-banner .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .summary-banner .pill.zero { background: var(--amber); color: white; }
+  .summary-banner .pill.pos { background: var(--green); color: white; }
+  .summary-banner .pill.equity { background: var(--navy); color: white; }
+  .summary-banner .arr { color: var(--grey); font-weight: 700; }
+
+  /* Phase cards */
+  .phase {
+    background: white;
+    border: 1px solid #DDD;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .phase-header {
+    background: var(--navy);
+    color: white;
+    padding: 7px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .phase-header .pn {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+  .phase-header .pt { font-size: 13px; font-weight: 700; margin-top: 1px; }
+  .phase-header .pd {
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .phase-body { padding: 12px 14px; }
+
+  /* Flow diagram */
+  .flow-diagram {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .actor-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 140px;
+    gap: 10px;
+    align-items: center;
+  }
+  .actor {
+    border: 2px solid;
+    border-radius: 4px;
+    padding: 6px 8px;
+    background: white;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .actor.investor { border-color: var(--party-investor); color: var(--party-investor); }
+  .actor.seller { border-color: var(--party-seller); color: var(--party-seller); }
+  .actor.private { border-color: var(--party-private); color: var(--party-private); }
+  .actor.bch { border-color: var(--party-bch); color: var(--party-bch); }
+  .actor.gov { border-color: var(--party-gov); color: var(--party-gov); }
+  .actor.muskoka { border-color: var(--party-muskoka); color: var(--party-muskoka); }
+  .actor .sub { font-size: 9px; font-weight: 500; color: var(--grey); margin-top: 1px; }
+
+  .arrow {
+    position: relative;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .arrow .arrow-line {
+    height: 2px;
+    background: var(--navy);
+    margin: 4px 0;
+    position: relative;
+  }
+  .arrow.in .arrow-line::after,
+  .arrow.right .arrow-line::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent var(--navy);
+  }
+  .arrow.left .arrow-line::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -4px;
+    border-style: solid;
+    border-width: 5px 8px 5px 0;
+    border-color: transparent var(--navy) transparent transparent;
+  }
+  .arrow.both .arrow-line::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent var(--navy);
+  }
+  .arrow.both .arrow-line::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -4px;
+    border-style: solid;
+    border-width: 5px 8px 5px 0;
+    border-color: transparent var(--navy) transparent transparent;
+  }
+  .arrow .amt { color: var(--navy); }
+  .arrow .desc { color: var(--grey); font-size: 9.5px; font-weight: 500; }
+
+  /* Money-flow line items */
+  .flow-list {
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  .flow-list .row {
+    display: grid;
+    grid-template-columns: 120px 1fr 100px;
+    gap: 10px;
+    padding: 3px 0;
+    border-bottom: 1px dashed #DDD;
+    align-items: center;
+  }
+  .flow-list .row:last-child { border-bottom: none; }
+  .flow-list .from { font-weight: 700; }
+  .flow-list .from.investor { color: var(--party-investor); }
+  .flow-list .from.seller { color: var(--party-seller); }
+  .flow-list .from.private { color: var(--party-private); }
+  .flow-list .from.bch { color: var(--party-bch); }
+  .flow-list .from.gov { color: var(--party-gov); }
+  .flow-list .from.muskoka { color: var(--party-muskoka); }
+  .flow-list .desc { color: #060E1E; font-size: 10.5px; }
+  .flow-list .desc strong { color: var(--navy); }
+  .flow-list .amt {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .flow-list .amt.neg { color: #B05050; }
+  .flow-list .amt.pos { color: var(--green); }
+
+  /* Phase result summary */
+  .phase-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 2px solid var(--navy);
+  }
+  .result-box {
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 6px 10px;
+    border-left: 3px solid var(--navy);
+  }
+  .result-box.amber { border-left-color: var(--amber); }
+  .result-box.green { border-left-color: var(--green); }
+  .result-box.plum { border-left-color: var(--plum); }
+  .result-box .label {
+    font-size: 9px;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 700;
+  }
+  .result-box .value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: 2px;
+  }
+  .result-box .note { font-size: 9.5px; color: var(--grey); margin-top: 1px; }
+
+  /* Concurrent block (for Phase 1 Seller's Muskoka close) */
+  .concurrent {
+    background: #FAF6FA;
+    border: 1px dashed var(--plum);
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 11px;
+  }
+  .concurrent .header {
+    color: var(--plum);
+    font-weight: 700;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  /* Cumulative tracker — sticky-ish display */
+  .tracker {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 6px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .tracker-header {
+    background: var(--navy);
+    color: white;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tracker-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .tracker-cell {
+    padding: 10px 12px;
+    border-right: 1px solid #EEE;
+    text-align: center;
+  }
+  .tracker-cell:last-child { border-right: none; }
+  .tracker-cell .when {
+    font-size: 10px;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 700;
+  }
+  .tracker-cell .cash {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .tracker-cell .cash.zero { color: var(--grey); }
+  .tracker-cell .cash.pos { color: var(--green); }
+  .tracker-cell .equity {
+    font-size: 10px;
+    color: var(--navy);
+    margin-top: 2px;
+  }
+  .tracker-cell .note { font-size: 9.5px; color: var(--grey); margin-top: 1px; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 8px 10px;
+    background: white;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border: 2px solid;
+    border-radius: 2px;
+  }
+
+  footer { margin-top: 16px; padding-top: 8px; border-top: 1px solid #DDD; font-size: 10px; color: #999; text-align: center; }
+
+  @media print {
+    body { background: white; padding: 12px; }
+    .phase { break-inside: avoid; }
+    @page { size: letter; margin: 0.4in; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>2008 BRIMLEY ROAD — MONEY FLOW VISUAL</h1>
+  <div class="sub">Three-phase capital flow · Ubuntu Land Trust + BCH + Private 1st bridge structure</div>
+  <div class="meta">Investor · Doc rev: May 2026 (v3.1 reconciled)</div>
+</header>
+
+<!-- Top summary banner -->
+<div class="summary-banner">
+  <div class="label">Investor Journey</div>
+  <div class="flow">
+    <span class="pill zero">Day 1: $0 cash</span>
+    <span class="arr">→</span>
+    <span class="pill zero">Phase 1 close: $0 cash</span>
+    <span class="arr">→</span>
+    <span class="pill zero">Phase 2.5: $0 cash</span>
+    <span class="arr">→</span>
+    <span class="pill pos">Phase 3: +$660K cash back</span>
+    <span class="arr">→</span>
+    <span class="pill pos">Permanent refi: +$2.34M</span>
+    <span class="arr">→</span>
+    <span class="pill equity">Yr 20: $822K equity returned + $2.64M paydown</span>
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#0D1F3C"></span><strong>Investor</strong></div>
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#B7791F"></span><strong>Seller (Gary)</strong></div>
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#6B3F73"></span><strong>Private 1st Lender</strong></div>
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#2D6E4F"></span><strong>BCH / CMHC</strong></div>
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#888888"></span>Gov't / Legal / Vendor</div>
+  <div class="legend-item"><span class="legend-swatch" style="border-color:#2E5D9F"></span>Muskoka counterparty</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<div class="phase">
+  <div class="phase-header">
+    <div>
+      <div class="pn">Phase 1</div>
+      <div class="pt">Land Close at 2008 Brimley + Seller's Muskoka Close (same day)</div>
+    </div>
+    <div class="pd">August 2026</div>
+  </div>
+  <div class="phase-body">
+
+    <!-- Brimley side -->
+    <div style="font-weight:700; color:var(--navy); font-size:11px; margin-bottom:6px;">BRIMLEY CLOSING — Money in and out of Investor</div>
+    <div class="flow-list">
+      <div class="row">
+        <span class="from private">Private 1st</span>
+        <span class="desc">Mortgage draw to Investor (Phase 1 portion) — secures land closing</span>
+        <span class="amt pos">+$1,121,950</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Cash to <strong>Seller (Gary)</strong> for land</span>
+        <span class="amt neg">−$1,000,000</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Ontario LTT + Toronto MLTT to <strong>Government</strong></span>
+        <span class="amt neg">−$72,950</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Legal, title, DD, adjustments to <strong>Lawyer</strong></span>
+        <span class="amt neg">−$49,000</span>
+      </div>
+      <div class="row" style="border-top:2px solid var(--navy); padding-top:5px; margin-top:3px;">
+        <span class="from investor"><strong>Investor net</strong></span>
+        <span class="desc"><strong>$0 cash deployed at closing</strong> — private 1st covers all $1.12M of outlay</span>
+        <span class="amt" style="color:var(--amber);"><strong>$0</strong></span>
+      </div>
+    </div>
+
+    <div style="font-weight:700; color:var(--navy); font-size:11px; margin: 10px 0 6px;">VENDOR PAPER — VTB registered (no cash movement)</div>
+    <div class="flow-list">
+      <div class="row">
+        <span class="from seller">Seller (Gary)</span>
+        <span class="desc">Vendor Take-Back (VTB) mortgage registered against land — first charge subordinate to private 1st</span>
+        <span class="amt">$1,000,000</span>
+      </div>
+    </div>
+
+    <!-- Seller's Muskoka close concurrent -->
+    <div class="concurrent">
+      <div class="header">CONCURRENT — Seller's Muskoka Closing (same day)</div>
+      <div class="flow-list" style="background:transparent; padding:0;">
+        <div class="row">
+          <span class="from seller">Seller (Gary)</span>
+          <span class="desc">Own cash on hand</span>
+          <span class="amt pos">+$500,000</span>
+        </div>
+        <div class="row">
+          <span class="from investor">Investor → Seller</span>
+          <span class="desc">The $1M cash received above arrives in time for the Muskoka close</span>
+          <span class="amt pos">+$1,000,000</span>
+        </div>
+        <div class="row">
+          <span class="from gov">Reverse Mortgage</span>
+          <span class="desc">Funded by Seller's own lender against Muskoka property</span>
+          <span class="amt pos">+$194,475</span>
+        </div>
+        <div class="row">
+          <span class="from muskoka">Seller → Muskoka Vendor</span>
+          <span class="desc">Purchase price for $1.65M Muskoka home + LTT + legal</span>
+          <span class="amt neg">−$1,694,475</span>
+        </div>
+        <div class="row" style="border-top:2px solid var(--plum); padding-top:5px; margin-top:3px;">
+          <span class="from seller"><strong>Seller net</strong></span>
+          <span class="desc">Muskoka home owned (with small reverse mortgage); $1M VTB owed to seller by Investor; Brimley occupancy retained</span>
+          <span class="amt" style="color:var(--plum);"><strong>$0</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase result -->
+    <div class="phase-result">
+      <div class="result-box amber">
+        <div class="label">Investor Cash</div>
+        <div class="value">$0</div>
+        <div class="note">Zero deployed</div>
+      </div>
+      <div class="result-box">
+        <div class="label">Private 1st Outstanding</div>
+        <div class="value">$1,121,950</div>
+        <div class="note">Accruing 10% interest</div>
+      </div>
+      <div class="result-box plum">
+        <div class="label">Seller Position</div>
+        <div class="value">Muskoka + VTB</div>
+        <div class="note">Lives at Brimley rent-free</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 2 ============ -->
+<div class="phase">
+  <div class="phase-header">
+    <div>
+      <div class="pn">Phase 2</div>
+      <div class="pt">Seller Transition — Rent-Free Occupancy at Brimley</div>
+    </div>
+    <div class="pd">Aug 2026 – Jun 2027 (~10 months)</div>
+  </div>
+  <div class="phase-body">
+    <div class="flow-list">
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Property tax + insurance for Brimley during seller's occupancy (carrying cost capitalized)</span>
+        <span class="amt neg">−~$10K/mo</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Interest accrual on private 1st mortgage (10%, capitalized to soft costs)</span>
+        <span class="amt neg">~$118K total</span>
+      </div>
+      <div class="row" style="border-top:1px dashed #BBB; padding-top:5px;">
+        <span class="from seller">Seller (Gary)</span>
+        <span class="desc">No payments due; quiet enjoyment under occupancy license. PAC submission and permits proceed in parallel.</span>
+        <span class="amt">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 2.5 ============ -->
+<div class="phase">
+  <div class="phase-header">
+    <div>
+      <div class="pn">Phase 2.5</div>
+      <div class="pt">Garage Build at Seller's Muskoka Home — VTB Waiver Trigger</div>
+    </div>
+    <div class="pd">Apr–Jun 2027</div>
+  </div>
+  <div class="phase-body">
+    <div class="flow-list">
+      <div class="row">
+        <span class="from private">Private 1st</span>
+        <span class="desc">Top-up draw — funds the garage construction at Muskoka</span>
+        <span class="amt pos">+$300,000</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Pays contractor for garage built at <strong>Seller's Muskoka property</strong></span>
+        <span class="amt neg">−$300,000</span>
+      </div>
+      <div class="row" style="background: #FAF7E8; border-bottom: none;">
+        <span class="from seller">Seller</span>
+        <span class="desc">Receives garage (face-value $500K credit). <strong>$500K of VTB waived</strong> — residual VTB drops to $500K</span>
+        <span class="amt" style="color:var(--green);">$500K VTB↓</span>
+      </div>
+      <div class="row" style="border-top:2px solid var(--navy); padding-top:5px; margin-top:3px;">
+        <span class="from investor"><strong>Investor spread benefit</strong></span>
+        <span class="desc">$500K VTB credit captured at $300K actual build cost = $200K net spread to Investor</span>
+        <span class="amt pos">+$200,000</span>
+      </div>
+    </div>
+
+    <div class="phase-result">
+      <div class="result-box amber">
+        <div class="label">Investor Cash</div>
+        <div class="value">$0</div>
+        <div class="note">Garage funded by private 1st</div>
+      </div>
+      <div class="result-box">
+        <div class="label">Private 1st Outstanding</div>
+        <div class="value">$1,421,950</div>
+        <div class="note">+ ~$118K accrued interest</div>
+      </div>
+      <div class="result-box plum">
+        <div class="label">Seller VTB Owed</div>
+        <div class="value">$500,000</div>
+        <div class="note">After $500K garage waiver</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 3 ============ -->
+<div class="phase">
+  <div class="phase-header">
+    <div>
+      <div class="pn">Phase 3</div>
+      <div class="pt">Construction Loan Close + BCH Land Draw — Refinancing Day</div>
+    </div>
+    <div class="pd">July 2027</div>
+  </div>
+  <div class="phase-body">
+
+    <div style="font-weight:700; color:var(--navy); font-size:11px; margin-bottom:6px;">BCH LAND DRAW (90% × $3M permitted land value)</div>
+    <div class="flow-list">
+      <div class="row">
+        <span class="from bch">BCH / CMHC</span>
+        <span class="desc">Land draw advances 90% of $3,000,000 permitted land value to Investor</span>
+        <span class="amt pos">+$2,700,000</span>
+      </div>
+    </div>
+
+    <div style="font-weight:700; color:var(--navy); font-size:11px; margin: 10px 0 6px;">SINGLE-DAY DISBURSEMENT FROM INVESTOR</div>
+    <div class="flow-list">
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Discharge <strong>Private 1st</strong> mortgage principal</span>
+        <span class="amt neg">−$1,421,950</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Pay accrued interest on Private 1st (capitalized 10%)</span>
+        <span class="amt neg">−$118,496</span>
+      </div>
+      <div class="row">
+        <span class="from investor">Investor</span>
+        <span class="desc">Pay residual <strong>VTB to Seller</strong> (timed with seller's move-out from Brimley)</span>
+        <span class="amt neg">−$500,000</span>
+      </div>
+      <div class="row" style="border-top:2px solid var(--green); padding-top:5px; margin-top:3px;">
+        <span class="from investor"><strong>CASH BACK TO INVESTOR</strong></span>
+        <span class="desc"><strong>BCH land draw less disbursements</strong> — first cash event for Investor in the entire deal</span>
+        <span class="amt pos" style="font-size:13px;"><strong>+$659,554</strong></span>
+      </div>
+    </div>
+
+    <div style="font-weight:700; color:var(--navy); font-size:11px; margin: 10px 0 6px;">CONSTRUCTION LOAN BEGINS DRAWING (parallel)</div>
+    <div class="flow-list">
+      <div class="row">
+        <span class="from bch">Construction Lender</span>
+        <span class="desc">$13.81M facility @ 85% LTV / 7.5% IO / 18-mo term; first draw 20% of project budget; demo + mobilization commences</span>
+        <span class="amt">Draw 1</span>
+      </div>
+    </div>
+
+    <div class="phase-result">
+      <div class="result-box green">
+        <div class="label">Investor Cash</div>
+        <div class="value">+$659,554</div>
+        <div class="note">First cash positive event</div>
+      </div>
+      <div class="result-box">
+        <div class="label">Investor Equity in Deal</div>
+        <div class="value">$812,232</div>
+        <div class="note">5% TPC, from $2M land uplift</div>
+      </div>
+      <div class="result-box plum">
+        <div class="label">Seller Position</div>
+        <div class="value">Fully Paid</div>
+        <div class="note">$2M total received; moved to Muskoka</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INVESTOR CASH TRACKER ============ -->
+<div class="tracker">
+  <div class="tracker-header">Investor Cash Position Tracker — End-to-End Lifecycle</div>
+  <div class="tracker-body">
+    <div class="tracker-cell">
+      <div class="when">Phases 1 → 2.5</div>
+      <div class="cash zero">$0</div>
+      <div class="equity">Equity: $0 deployed</div>
+      <div class="note">Private 1st bridges everything</div>
+    </div>
+    <div class="tracker-cell">
+      <div class="when">Phase 3 (Jul 2027)</div>
+      <div class="cash pos">+$659,554</div>
+      <div class="equity">Equity: $812K (from uplift)</div>
+      <div class="note">BCH land draw refinances bridge</div>
+    </div>
+    <div class="tracker-cell">
+      <div class="when">Permanent Refi (Q3 2029)</div>
+      <div class="cash pos">+$2,341,680</div>
+      <div class="equity">Equity: $822K (unchanged)</div>
+      <div class="note">After 5% TPC equity carve-out</div>
+    </div>
+    <div class="tracker-cell">
+      <div class="when">Yr 20 + Cumulative Dist</div>
+      <div class="cash pos">+$7,846,079</div>
+      <div class="equity">Equity returned + paydown + 60% cash flow</div>
+      <div class="note">$822K + $2.64M + $4.38M</div>
+    </div>
+  </div>
+</div>
+
+<div style="background: var(--bg); padding: 10px 14px; border-radius: 4px; font-size: 11px; line-height: 1.4; border-left: 3px solid var(--green);">
+  <strong style="color: var(--navy);">Bottom line:</strong> Investor deploys <strong>$0 cash</strong> across all phases of the development. The first cash event is a positive $660K at Phase 3 (Jul 2027), made possible by the $1.42M private 1st bridge being refinanced by the BCH land draw. Total Investor lifetime value across the project ≈ <strong>$10.85M</strong> ($660K Phase 3 + $2.34M permanent refi + $7.85M 20-year return) on an $822K equity contribution that itself is fully sourced from the $2M land uplift — making the cash-on-cash return mathematically undefined (return on a zero base).
+</div>
+
+<footer>
+  Investor · Greenway NFP · Ubuntu Land Trust · BCH Capital Stack · 2008 Brimley Road
+</footer>
+
+</body>
+</html>
